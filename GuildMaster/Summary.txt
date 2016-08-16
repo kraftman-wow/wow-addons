@@ -1,0 +1,51 @@
+
+Modules\GMAlts.lua
+	Records which alts are in the same guild, 
+	and shares this info with other players.
+
+Modules\GMBanker.lua
+	Adds filters to each bank tab allowing you to automatically sort items 
+	depending on type, subtype, Quality, or auction value. (Requires auctioneer for auction value 
+	to be determined
+
+Modules\GMEvent.lua
+	Auto create guild events with filters for level, role, and gear.
+
+Modules\GMForum.lua
+	Adds an in-game forum allowing players to communicate with one another without
+	needing to be online at the same time.
+
+Modules\GMGuildFrame.lua
+	Adjusts the layout of the guild frame for more direct access to certain 
+	features and information.
+
+Modules\GMLocator.lua
+	Shows guild members on the map
+
+Modules\GMOTD.lua
+	Refreshes the guild message of the day at set intervals
+
+Modules\GMRanker.lua
+	Auto rank guild members based on certain criteria.
+
+Modules\GMRecruit.lua
+	Auto announces different guild recruitment messages from different players
+	in the guild.
+
+Modules\GMRoster.lua
+	advanced guild roster allowing searching by class,name, etc, and 
+	extra player stats.
+
+Modules\GMSchedule.lua
+	Schedule events, message of the day announcements, etc
+
+Modules\GMSettings.lua
+	Interface options for the addon: control which modules are loaded, 
+	and the settings for each module.
+
+Modules\GMSync.lua
+	Syncronises extra player data between guild members, such as donations,
+	
+
+Modules\GMTutorial.lua
+A breif wizard to explain the functionality of the addon and each module.

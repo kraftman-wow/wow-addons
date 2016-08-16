@@ -1,0 +1,111 @@
+
+Modules\GMAlts.lua
+	Upon logging in, the module checks to see if the player is in a guild:
+	if they are, it creates a record and stores their name under their guild name.
+	all alts in the current guild are then broadcast out for other players to receive.
+	upon receiving a name from a player, the name is added to the addons roster under the players name.
+
+Modules\GMBanker.lua
+	The guild master can use the dropdown menu to add certain filters to a tab, for example
+	only Blue items that are weapons, or green gems.
+	The module then scans all of the items and find any which match all of the tabs filters,
+	matching items are then moved to the desired tab.
+	Any items which do not match any filter are auto sorted by subtype, and placed in any tabs that 
+	have no filters.
+	Tabs that have "Ignore" selected in the dropdown menu are treated like they do no exist.
+	No items will be moved from them or placed into them.
+	
+	Each tab can also have a minimum value set. This pulls the item auction price from the Auctioneer database,
+	and multiplies it by the number of items in the stack. If the value is above a tabs minimum value, the item
+	will be moved to that tab. This is useful for creating Officer tabs which contain expensive items that
+	general guild members cannot access.
+	
+	Due to the latency between the client and server, some items may not get properly moved between tabs.
+	the module attempts to compensate for this by splitting movement of items that may conflict across multiple passes.
+	If after sorting the bank it looks like it hasnt quite sorted all of the items, run the sort again and it should sort
+	it out.
+
+Modules\GMEvent.lua
+	Adds a button to the guild frame which allows any guild member to create a custom event.
+	Options for the name of the event, the roles required, a minimum level, resilience, or item level.
+	Sends the invite to any player who matches the criteria, and isnt busy (raiding/arena/etc)
+	
+
+Modules\GMForum.lua
+	The forum is a reddit-style message board in that each reply is shown
+	underneath the post it is a reply to.
+	New topics on the front page must have titles, however replies can have replies without titles,
+	whichever is inputted is shown as the title.
+	Because of the style of the forum, deleting posts would mean that
+	children of those posts would have to be deleted too. As a result, 
+	deleting posts changes their content to "deleted" and greys them out, 
+	leaving any undeleted child posts intact.
+	There is currently no method of permanently deleting posts, 
+	This would need to be stored server side somehow otherwise it will cause major headaches.
+	
+
+
+Modules\GMGuildFrame.lua
+	Guild message of the day and events are moved to the first page, as well as
+	the Add Member, View Log, and guild control buttons for guild masters.
+	Guild rewards and guild perks are now both shown under the "Rewards" tab.
+	Some extra info is shown under the "Info" tab.
+	
+	A "kill chat" button has been added to the guild control page. This will temporarily block all 
+	guild chat, in case of arguements etc.
+
+Modules\GMLocator.lua
+	Location data is recorded by the addon and then transmitted out ot other guild members.
+	If more than one player is in the same zone, the update frequency increases.
+
+Modules\GMOTD.lua
+	Aimed to encourage players to actually read the message of the day, 
+	This module will refresh the current message of the day at set intervals, 
+	Making it appear in guild chat.
+	The duration between update can be set in the interface options for the module.
+
+Modules\GMRanker.lua
+	Adds an extra item to the dropdown in "Guild Control" which allows you to 
+	apply certain filters to each rank. Guild members can then be sorted between ranks
+	based on wether they match the specified filters.
+
+Modules\GMRecruit.lua
+	This module aims to promote your guild more and from a diverse range of players by alternating who places recruitment adds in the trade channel. 
+	Upon entering a city, the module will place your advert, and then broadcast to all other addons that it has done so. Until leave the city and re-enter, it will not place any more adverts.
+	Depending on the interval set by the GM or officer, any other players entering a city within the next X minutes will not place any adverts.
+	After X minutes, any player entering a city will once again place an advert.
+	As many adverts as you like can be added, and will be synced to other players with the addon. 
+	If more than one advert is found, the advert posted will be randomly chosen form all found.
+
+Modules\GMRoster.lua
+	This adds a new customised roster into the guild frame, where the old roster was.
+	The new roster is searchable, with results showing as you type them. The searches are limited
+	to the columns that are shown, for example if only level and name are shown, they will be 
+	the only criteria that the searchbox uses to filter results.
+	Rather than switching between different views, a custom view can be created
+	by adding and removing columns, as well as repositioning and resizing them.
+	The right click popup for guildmembers in the roster has been enhanced to allow
+	options for promoting, demoting, and removing members.
+	A new detail frame has been added which shows extra player stats recorded by the
+	addon, including talents and base stats.
+
+Modules\GMSchedule.lua
+	Not yet written
+
+Modules\GMSettings.lua
+	Each module has its own function for loading itself, unloading itself, 
+	and displaying options. This module provides a method of calling the modules
+	functions, and will eventually provide a few other general options.
+	
+
+Modules\GMSync.lua
+	Upon  the player entering the game, the addon sends a ping out to check for other players with the addon. At this point any data received will be stored in a temporary table.
+	If no other addons send a pong, the addon will assume that it is the only one online, and start a new session, adding any temporary data into the new session.
+	If other addons are found, the oldest addon that is not currently involved with syncing to another player will also pause its own data gathering, and begin transmitting the current table to the new addon.
+	Once the current session has been updated to the new addon, both the newest and oldest addons will resuming recording directly to their sessions, and add any temporary information recorded.
+	The newest and oldest addons will broadcast their session ID's to all other addons, and all addons transmit any sessions that other addons are missing.
+	if sessions are somehow recorded during another session, they will eventually be detected and deleted.
+
+Modules\GMTutorial.lua
+	runs through each module with extra info on how the module works, 
+	and the settings

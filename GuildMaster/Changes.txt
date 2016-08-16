@@ -1,0 +1,145 @@
+
+GuildMaster.lua
+1.7
+	Started moving GM Stats into GMRoster
+1.5
+	More changes to the way modules are loaded, and the way that the guild frame is loaded.
+	Moved some roster functionality over to GMRoster.
+1.4+
+	Modified some of the function calls to make each module properly modular
+
+GMTimer.lua
+2.0 
+	-fixed an error preventing the timer repeating.
+1.53
+	New method for adding timers, makes things slightly neater
+	some minor increases in efficiency
+1.42
+Moved the message queueing function from GMSync to here, which means other addons can still use it when 
+GMSync is deactivated.
+
+
+Modules\GMAlts.lua
+2.1
+	--removes alts no longer in the guild.
+
+1.4
+	Broadcasting alts now works.
+	Recieving and recording alts now works.
+
+Modules\GMBanker.lua
+2.1
+	The guild bank frame should no longer overlap other frames when shown
+	away from the guild bank.
+	Added a last scanned time.
+
+2.0
+	Added button to the guildframe to enable toggling the guild bank
+1.6
+	Converted to new timer method
+	fixed error on checking for auctioneer
+	guild bank frame shows away from the guild bank.
+1.52
+	Created the module - Filters and sorting now work.
+
+Modules\GMEvent.lua
+
+
+1.47
+	-Added option to select minimum resilience, level, and item level.
+	-Added a status window showing which players have been invited, etc.
+	-Declining an event will automatically decline all events for the next 15 minutes
+
+Modules\GMForum.lua
+1.52
+fixed bug that hid the  rep bar.
+
+1.4
+	Topics can now be completely deleted.
+	Guild Masters can delete all posts.
+
+Modules\GMGuildFrame.lua
+2.0
+	Lots of small fixes to do with the new patch
+
+1.6
+	Fixed issue with rewards frame cuasing an error on mouseover for level 1 guilds.
+
+1.5
+	Fixed a bug due to the recent interface changes,
+	Brought back the info window. This will be used to show/edit the guild information,
+	and also show some other stats about the guild.
+- 1.47
+	Added a button in guild control to temporarily suspend all guild chat.
+	Rewards now show properly
+	guild masters can delete all posts
+	some posts can be properly deleted
+
+Modules\GMLocator.lua
+1.52
+	Tooltips now show when the map is fullscreen
+
+1.42
+	Fixed a problem where guildies that had entered an instance where shown at the last location before entering
+	Fixed an error caused by recieving the location of a player in an instance
+	
+
+Modules\GMOTD.lua
+1.6
+	-should sync updates with other players
+1.52:
+	Hopefully fixed the update bug.
+1.5
+Should now work!
+
+Modules\GMRanker.lua
+1.52:
+	merged antirankspam into this module
+1.50
+	Scrapped the manual vs auto features.
+	Integrated the module into the guild control UI ("Rank Requirements" in the guild rank control dropdown)
+	fixed a bug where it would still spam per rank change.
+
+Modules\GMRecruit.lua
+1.4
+	Broadcasting alts now works.
+	Recieving and recording alts now works.
+
+Modules\GMRoster.lua
+2.0-23
+	bug fix:
+		search box iis constrain by the show offline button
+		resizing the roster columns no longer changes sort order
+		class names in the detail frame start with a capital letter.
+		added item level
+2.0
+	Created the new roster
+	added talent sharing
+1.5
+	- moved the roster update functionality into this module
+1.4 - CreateModule
+
+Modules\GMSchedule.lua
+1.52 Created the addon
+
+Modules\GMSettings.lua
+1.52:
+	Each module now stores its own settings. This module loads other modules
+	settings and displays them in the interface options menu.
+1.40:
+	Made each module properly modular, added toggling of each module.
+
+Modules\GMStats.lua
+	1.4
+	Total donations now includes donations from looting.
+	Mousewheel to scroll
+	escape closes the window.
+
+Modules\GMSync.lua
+1.42
+	-	Moved the queue function over to GMTimer.
+		Added a method of blocking users whose addons are out of date.
+
+Modules\GMTutorial.lua
+1.52
+	Created the module.

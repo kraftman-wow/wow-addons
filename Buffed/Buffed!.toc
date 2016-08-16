@@ -1,0 +1,7 @@
+## Interface: 40000
+## Title: Buffed!
+## Notes: Buff frame mod?
+## Version 2.2 
+## Author: Kraftman
+## SavedVariables: BuffedSettings, BuffedProfiles
+Buffed!.lua

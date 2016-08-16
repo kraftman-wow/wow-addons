@@ -1,0 +1,32 @@
+## Interface: 40100
+## Title: GuildMaster
+## Notes: All round guild management system
+## Version: 2.0
+## X-Revision: 24
+## Author: Kraftman
+## SavedVariablesPerCharacter: GMLogs, GMSettings, GMForum, GMRoster, GMBanker
+## SavedVariables: GMAlts
+
+
+GuildMaster.lua
+GMTimer.lua
+
+
+Modules\GMAlts.lua
+Modules\GMAntiRankSpam.lua
+Modules\GMBanker.lua
+Modules\GMEvent.lua
+Modules\GMForum.lua
+Modules\GMGuildFrame.lua
+Modules\GMLocator.lua
+Modules\GMOTD.lua
+Modules\GMRanker.lua
+Modules\GMRecruit.lua
+Modules\GMRoster.lua
+Modules\GMSchedule.lua
+Modules\GMSettings.lua
+Modules\GMStats.lua
+Modules\GMSync.lua
+Modules\GMTutorial.lua
+Modules\GMTalentDB.lua
+

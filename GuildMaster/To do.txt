@@ -1,0 +1,354 @@
+
+GuildMaster.lua
+
+
+
+--------------------------------
+
+Each time the player logs in, broadcast some stats, eg:
+resi
+rating
+itemlevel
+
+Take a look at moving some of the savedvariables away from per character, 
+eg the database and forum
+
+
+Make all modules use the stored playername instead of UnitName("player")
+
+
+current layout: 
+
+GMLogs 
+GMTimer.lua
+Need to make the function that adds the queued stuff work faster.
+
+Efficiency:
+Need to have seperate tables for different jobs, 
+eg some functions only need checking once a second, once a minute, once an hours
+
+Make the timer more efficient:
+only perform updates as fast as the fastest required update
+
+]]
+
+local SendAddonMessage 
+Modules\GMAlts.lua
+	Add method of removing alts if they changed guilds
+	integrate the alts feature into all of the other modules that need it.
+]]
+
+GMaster.LoadOrder.GMAlts 
+Modules\GMBanker.lua
+	Show the last checked time.
+	Auto bag greys.
+	Change the pass system to recheck the location each time.
+	
+	Integrate settings and load/unload
+	need to add an icon to the guild frame
+]]
+
+GMaster.LoadOrder.GMBanker 
+Modules\GMEvent.lua
+	Priority: Low
+	Add broadcast event to record who started the event, and who joined it 
+	check recording of event start and attendance.
+	option to choose from previous event
+	make the list of replies scrollable.
+--]]
+
+
+GMaster.LoadOrder.GMEvent 
+Modules\GMForum.lua
+	Priority: High
+		Make replies properly delete.
+		sticky posts.
+		age limit of posts.
+		
+		Add Colors!
+		convert gmfrequest to whisper
+]]
+
+
+--[[
+Possible future plans:
+	Polls
+Sticky posts, etc:
+
+need to properly check the way that the posts are sorted, in order to properly 
+make the stickies higher up the list.
+
+|cff66119d Test|r
+
+--]]
+
+GMaster.LoadOrder.GMForum 
+Modules\GMGuildFrame.lua
+	 fix the reward showing when the forum shows.
+	Move the guild control button to the roster frame.
+	Bring the info frame back in and add some guild stats:
+	average level
+	number of 85's
+	number of each class.
+	
+	Get the Invite Request working.
+	
+	BUG:
+	rep bar doesnt show back up again after moving to forum
+	
+]]
+
+--[[ 
+Future plans:
+More info on the info page, summary of stats collected by the addon.
+--]]
+
+
+GMaster.LoadOrder.GMGuildFrame 
+Modules\GMLocator.lua
+	Efficiency:
+	Decrease the update interval for players in seperate zones,
+	Increase the interval for players in the same zones, using the 
+	whisper channel.
+]]
+
+GMaster.LoadOrder.GMLocator 
+Modules\GMOTD.lua
+	Sync duration with other players
+	Add the duration slider to the edit box of the MOTD
+]]
+
+
+local module 
+Modules\GMRanker.lua
+	Add extra methods to rank people by.
+	Broadcast the requirements so that the guild members can see what they need to do
+	to achieve the next rank.
+	Priority: High
+	Need to send a message to anitrankspam to make it block all rank changes
+	need to convert it to modular
+]]
+
+
+
+--[[
+Other ideas:
+General ranking tools:
+Remove all members offline for more then X months 
+																-(ignore specific rank)
+																-account for alts.
+Delete Rank: Auto move everyone from that rank either up or down																
+
+when promoting someone manually, allow optional reason
+delay the manual promote until the player is next online, this way they will notcie their new rank change.
+snend some kind of congratulations.
+
+This may be better suited to being integrated into the guild control UI
+
+
+--]]
+
+--[[
+Need to merge the old test methods into the new ui
+
+SendAddonMessage("GMRanker", "Start", "GUILD")
+	tinsert(GMaster.Timers, {runonce 
+Modules\GMRecruit.lua
+	Get the settings for the module working again.
+	broadcast needs to handle longer messages
+	
+]]
+
+
+
+GMaster.LoadOrder.GMRecruit 
+Modules\GMRoster.lua
+	-Highlight the selected player in the roster
+	-add a method of request player stats if they are online
+	-better syncing of player stats.
+	-MemberDetail:
+		Gear
+		Personal Note
+	Scrollbars
+	
+	restructure the 'list' table to neaten it up.
+	
+	Integrate GMStats
+	
+	Possible future plans:
+		Record reason for kicking.
+		Auto mail new members
+	
+]]
+
+
+
+
+local module 
+Modules\GMSettings.lua
+	Add method of removing alts if they changed guilds
+	integrate the alts feature into all of the other modules that need it.
+]]
+
+--[[
+1. About
+2. Changes
+3. To do.
+4. Known Issues
+
+
+Modules\GMStats.lua
+	Get the graphs working properly.
+	sort by name
+	check that offline changes are working properly.
+	remove players that no longer exist
+	change date ranges are working.
+	show the guild rep 
+
+	Track some general guild info.
+	average level, 
+	etc.
+
+	Ideally this module should be integrated into the guild roster:
+		main problem is fitting the data into the roster.
+]]
+
+function GMaster.AL.GMStats()
+
+
+--[[
+Extra views:
+donations: donated, looted, withdrawn, repair, total
+
+--]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	local SortBy 
+Modules\GMSync.lua
+	Efficiency:
+	Change the order of the if/elese statements to better suit how oftn ethey are called.
+	
+	New Method:
+	10 minute blocks of data, sync every half an hour.
+	
+	log in, record login time, start recording.
+	after 10 mins, split chunk.
+	after half hour, transmit the start time, size of last chunk
+	Wait 10 seconds, then decide which module is the "master"  
+	Master transmits all known chunk times
+		Slaves request missing chunks, transmit missing chunk labels.
+		Wait 30 seconds, count requests for each chunk.
+		If a chunk has multiple requests, broadcast it
+		If a chunk has a single request, WHISPER it.
+	
+	hash value for tables:
+		need to create some method of finding the total size of a table
+		
+	Problems:
+		Players changing zones/reloading
+		-may miss some data
+		
+	Merging continuous chunks:
+		Find tables whose start and end times match
+		merge the table data
+		
+	Merging non-comtinuous chunks:
+		Non continuous chunks can be merged provided: 
+		the start and end times of each chunk are recorded into the new chunk
+		for example:
+			- chunk 1 measures a to c
+			- chunk 2 measures g to h
+			chunk 1a is a merge of ac gh
+			chunk 3 measures d to f
+			chunk 1b is a merge of 1a and 3 consisting a through h
+			
+		Timescales:
+			10 minute chunks
+			merge after 30 mins and transmit
+			merge after 1 hour
+			merge 24 hour after 1 day
+			merge 7 days after 1 week
+			merge 4 weeks after a month
+			
+			Eventually merge data into the roster.
+	
+	Security:
+	 With the limitations on obfuscation, can only be basic.
+	 Masking the saved vars by conversion to ASCII?
+
+Use GMRoster savedvar to store which members are online, and the last time they were seen, 
+(any addonmessage received should be used as the last time they were seen.)
+	 
+]]
+
+
+--[[
+
+
+["PLAYER"] 
+Modules\GMTutorial.lua
+Everything
+]]
+
+
+--[[
+For guild masters:
+Welcome to guild master: it appears that you are in fact a guild master! Which is good because this
+ addon is designed for you! This tutorial will run you through come of the functionality of the addon, 
+ showing you each module and what it does. It's a bit of a read but its worth it, if you want to re read it
+ any time, you can do so from the interface options.
+ 
+ General:
+ Guild master is designed to make every aspect of managing a guild easier for you. It does this by allowing
+ you to automate laborious tasks such as ranking members based on their contributions, organising events,
+ recruiting new members, etc.
+ The addon is made up of a number of modules, which can be enabled or disabled depending on which you require them.
+ 
+ 
+ The following is a breif summary of each module, and settings which will be reflected throughout the guild.
+ 
+ GMAlts:
+ This module records the alts of each player, and shares this information between guild members. 
+ It is then used to group the player with their alts in the roster, to show a players total contribution 
+ to the guild from all alts, and to rank the alts if you wish.
+ 
+ Settings: Enable/disable
+ 
+ 
+ GMEvent:
+ This module allows you to quickly invite guild members to events based on certain requirements. It will not 
+ invite anyone who is busy (in a party/battleground/instance/arena) and you can choose a minimum level, item
+ level, or resilience. Any member who does not meet the requirement will not receive the invitation.
+ Players that are invited choose which role they will fulfill, and players are no longer invited once each 
+ role becomes full.
+ Settings: Enable/disable
+ 
+ GMForum:
+ This module adds a forum to the guild frame which allows you to communicate with offline guild members.
+ Each topic can be expanded/collapsed to show the replies. guild masters can delete any posts
+ 
+ GMGuildFrame:
+ This module is purely cosmetic; it rearranges the guild frame to make it more usable: the "Add Member" and "Guild Control buttons are on the first page, 
+ for easier access. The perks and reputation rewards are both on the rewards page, and the MOTD, events, and news are on the main page.
+ The 
+ 
+ GMLocator:
+ This module transmits location data from 
+
+
+--]]
